@@ -1,8 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<MvcTodoApp.Models.TaskItem>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>قائمة المهام</h1>
+
+<form method="post" asp-action="AddTask">
+    <input type="text" name="title" placeholder="أدخل عنوان المهمة" required />
+    <button type="submit">إضافة مهمة</button>
+</form>
+
+@foreach (var task in Model)
+{
+    <form method="post" asp-action="Edit">
+        <input type="hidden" name="Id" value="@task.Id" />
+        <input type="text" name="Title" value="@task.Title" />
+        <input type="checkbox" name="IsComplete" value="true" @(task.IsComplete ? "checked" : "") />
+        <button type="submit">تعديل</button>
+    </form>
+}
